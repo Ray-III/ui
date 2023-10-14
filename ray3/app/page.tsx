@@ -1,10 +1,13 @@
 "use client";
+
 import Image from 'next/image';
 import Navbar from '../components/ui/navbar';
 import '../styles/globals.css';
 import Chart from '../components/chart';
 import TradingBar from '../components/ui/tradingBar';
+import TradingForm from '../components/ui/tradingForm';
 import React, { useState } from 'react';
+import Footer from '../components/ui/footer'; 
 
 interface TradingBarProps {
   selectedPair: string;
@@ -26,7 +29,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-[#131722]">
       <Navbar />
       <TradingBar
         selectedPair={selectedPair}
@@ -34,7 +37,11 @@ const Home: React.FC = () => {
         percentChange={percentChange}
         onUpdateData={updateData}
       />
-      <Chart selectedPair={selectedPair} />
+      <div className="flex p-4 mb-6">
+        <Chart selectedPair={selectedPair} />
+        <TradingForm />
+      </div>
+      <Footer/>
     </div>
   );
 };
