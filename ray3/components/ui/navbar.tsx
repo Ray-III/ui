@@ -43,7 +43,7 @@ export default function Navbar({
         <div className="separator h-4 bg-indigo-900 w-0.5"></div>
         <ul className="menu-list flex space-x-4">
           <li>
-            <Link href="/trade" className="text-blue-500 hover:underline">
+            <Link href="../../" className="text-blue-500 hover:underline">
               Trade
             </Link>
           </li>

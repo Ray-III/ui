@@ -4,24 +4,17 @@
 
 @layer base {
   :root {
-    --background: #000000;  /* Couleur de fond noire */
+    --background: #090B12;  /* Couleur de fond sombre */
     --foreground: #FFFFFF;  /* Couleur de texte principal */
 
     /* Autres variables de couleur */
-    --primary: #FF3E97;
+    --primary: #2196f3; /* Nouvelle couleur bleue */
     --secondary: #6C5DD3;
     --accent: #FFB946;
-    --destructive: #FF6347;
+    --destructive: #f44336; /* Couleur rouge pour l'option short */
 
     /* Autres variables */
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: #000000;  /* Couleur de fond en mode sombre */
-    --foreground: #FFFFFF;  /* Couleur de texte principal en mode sombre */
-
-    /* Autres variables de couleur en mode sombre */
+    --radius: 10px; /* Augmentation du rayon de bordure pour le formulaire */
   }
 }
 
@@ -34,4 +27,116 @@
   }
 }
 
-/* Ajoutez d'autres styles personnalisés ici pour correspondre à l'apparence de Polynomial */
+/* Styles pour le formulaire de trading */
+.trading-form {
+  background: var(--background); /* Couleur de fond sombre */
+  color: var(--foreground); /* Texte blanc */
+  padding: 40px;
+  border-radius: var(--radius); /* Utilisation de la variable de rayon */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+
+  /* Styles pour le bouton de trading en bleu */
+  button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: var(--primary); /* Utilisation de la nouvelle couleur bleue */
+    border: none;
+    border-radius: var(--radius); /* Utilisation de la variable de rayon */
+    color: var(--foreground);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  /* Ajout d'un effet de couleur pour la barre de levier */
+  .leverage-slider {
+    width: 100%;
+    padding: 20px 0;
+
+    /* Styles pour la couleur de fond de la barre qui évolue avec la position de la barre */
+    background: linear-gradient(to right, var(--primary) 0%, var(--primary) 50%, var(--destructive) 50%, var(--destructive) 100%);
+    border-radius: var(--radius); /* Utilisation de la variable de rayon */
+
+    input[type="range"] {
+      width: 100%;
+      background: transparent;
+      -webkit-appearance: none;
+      margin-top: 12px; /* Marge supérieure ajoutée entre la barre et les éléments précédents */
+
+      &::-webkit-slider-runnable-track {
+        height: 12px;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: var(--foreground);
+        border: 2px solid var(--primary); /* Utilisation de la nouvelle couleur bleue */
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      input[type="range"]:hover::-webkit-slider-thumb {
+        background: var(--primary); /* Utilisation de la nouvelle couleur bleue au survol de la poignée */
+      }
+    }
+  }
+
+  /* Styles pour les options long/short */
+  .trade-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px; /* Marge supérieure ajoutée entre les options et la barre de levier */
+  }
+
+  .trade-options label {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: var(--radius); /* Utilisation de la variable de rayon */
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .trade-options label:last-child {
+    background: var(--destructive); /* Utilisation de la couleur rouge */
+  }
+
+  .trade-options label:hover {
+    background: #5644AB; /* Nouvelle couleur au survol des options */
+  }
+
+  .trade-options input[type="radio"]:checked + label {
+    background: var(--primary); /* Utilisation de la nouvelle couleur bleue */
+  }
+
+/* Ajoutez ces styles CSS dans votre fichier CSS */
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-item {
+  margin-right: 20px; /* Marge entre les éléments */
+  animation: marquee 10s linear infinite; /* Vitesse et répétition de l'animation */
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+}
+
