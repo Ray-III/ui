@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #000000;  /* Couleur de fond noire */
+    --foreground: #FFFFFF;  /* Couleur de texte principal */
+
+    /* Autres variables de couleur */
+    --primary: #FF3E97;
+    --secondary: #6C5DD3;
+    --accent: #FFB946;
+    --destructive: #FF6347;
+
+    /* Autres variables */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: #000000;  /* Couleur de fond en mode sombre */
+    --foreground: #FFFFFF;  /* Couleur de texte principal en mode sombre */
+
+    /* Autres variables de couleur en mode sombre */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Ajoutez d'autres styles personnalisés ici pour correspondre à l'apparence de Polynomial */
