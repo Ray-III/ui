@@ -18,7 +18,14 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "@taquito/beacon-wallet": "^17.0.0",
+    "@taquito/taquito": "^17.0.0",
+    "qrcode-generator": "^1.4.4",
+    "stream-browserify": "^3.0.0",
+    "buffer": "^6.0.3",
+    "events": "^3.3.0",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@types/node": "^20",
