@@ -60,6 +60,7 @@ const Home: React.FC = () => {
     <div className="flex flex-col">
       <Navbar 
         Tezos={Tezos}
+        setTezos={setTezos}
         setContract={setContract}
         setPublicToken={setPublicToken}
         setWallet={setWallet}
@@ -69,6 +70,7 @@ const Home: React.FC = () => {
         contractAddress={contractAddress}
         setBeaconConnection={setBeaconConnection}
         wallet={wallet}
+        userAddress={userAddress}
       />
       <TradingBar
         selectedPair={selectedPair}

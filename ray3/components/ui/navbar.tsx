@@ -5,6 +5,7 @@ import ConnectButton from '../ConnectWallet';
 import { Dispatch, SetStateAction, useState, useEffect } from "react";
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import DisconnectButton from '../DisconnectWallet';
 
 type ButtonProps = {
   Tezos: TezosToolkit;
@@ -14,6 +15,8 @@ type ButtonProps = {
   setUserBalance: Dispatch<SetStateAction<number>>;
   setStorage: Dispatch<SetStateAction<number>>;
   contractAddress: string;
+  userAddress: string;
+  setTezos: Dispatch<SetStateAction<TezosToolkit>>;
   setBeaconConnection: Dispatch<SetStateAction<boolean>>;
   setPublicToken: Dispatch<SetStateAction<string | null>>;
   wallet: BeaconWallet;
@@ -21,9 +24,11 @@ type ButtonProps = {
 
 export default function Navbar({
     Tezos,
+    setTezos,
     setContract,
     setWallet,
     setUserAddress,
+    userAddress,
     setUserBalance,
     setStorage,
     contractAddress,
@@ -55,18 +60,31 @@ export default function Navbar({
         </ul>
       </div>
       <div>
-      <ConnectButton
-        Tezos={Tezos}
-        setContract={setContract}
-        setPublicToken={setPublicToken}
-        setWallet={setWallet}
-        setUserAddress={setUserAddress}
-        setUserBalance={setUserBalance}
-        setStorage={setStorage}
-        contractAddress={contractAddress}
-        setBeaconConnection={setBeaconConnection}
-        wallet={wallet}
+        {userAddress ? (
+          <DisconnectButton
+            wallet={wallet}
+            setPublicToken={setPublicToken}
+            setUserAddress={setUserAddress}
+            setUserBalance={setUserBalance}
+            setWallet={setWallet}
+            setTezos={setTezos}
+            setBeaconConnection={setBeaconConnection}
         />
+        ) : (
+          <ConnectButton
+          Tezos={Tezos}
+          setContract={setContract}
+          setPublicToken={setPublicToken}
+          setWallet={setWallet}
+          setUserAddress={setUserAddress}
+          setUserBalance={setUserBalance}
+          setStorage={setStorage}
+          contractAddress={contractAddress}
+          setBeaconConnection={setBeaconConnection}
+          wallet={wallet}
+          />
+        )}
+      
       </div>
     </nav>
   );
