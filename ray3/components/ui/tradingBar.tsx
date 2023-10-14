@@ -1,52 +1,49 @@
-"use clein"
+"use clien"
 
 import React, { useState, useEffect } from 'react';
 
 interface TradingBarProps {
-  selectedPair: string;
+  selectedPair: string; // Ajoutez cette propriété
   price: number;
   percentChange: number;
   onUpdateData: (newPair: string, newPrice: number, newPercentChange: number) => void;
 }
 
 const TradingBar: React.FC<TradingBarProps> = ({ selectedPair, price, percentChange, onUpdateData }) => {
-  const [newSelectedPair, setNewSelectedPair] = useState(selectedPair);
+  const [internalSelectedPair, setInternalSelectedPair] = useState(selectedPair);
 
   useEffect(() => {
+    // Effectuez une requête API pour obtenir les données en fonction de selectedPair
     const fetchData = async () => {
       try {
-        const apiUrl = `https://api.binance.com/api/v3/ticker/24hr?symbol=${selectedPair}`;
+        const apiUrl = `https://api.binance.com/api/v3/ticker/24hr?symbol=${internalSelectedPair}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
-        const newPrice = parseFloat(data.lastPrice);
-        const newPercentChange = parseFloat(data.priceChangePercent);
-
-        // Mettre à jour les données via la fonction onUpdateData
-        onUpdateData(selectedPair, newPrice, newPercentChange);
-
-        // Mettre à jour la paire sélectionnée
-        setNewSelectedPair(selectedPair);
+        onUpdateData(internalSelectedPair, parseFloat(data.lastPrice), parseFloat(data.priceChangePercent));
       } catch (error) {
         console.error('Erreur lors de la requête API :', error);
       }
     };
 
-    if (selectedPair !== newSelectedPair) {
-      fetchData();
-    }
-  }, [selectedPair, newSelectedPair, onUpdateData]);
+    fetchData();
+  }, [internalSelectedPair, onUpdateData]);
 
   return (
-    <div className="tradingBar">
-      <select value={selectedPair} onChange={(e) => onUpdateData(e.target.value, price, percentChange)}>
+    <div className="bg-black text-white p-4 flex items-center justify-between">
+      <select
+        value={internalSelectedPair}
+        onChange={(e) => setInternalSelectedPair(e.target.value)}
+        className="bg-black text-white border border-white p-2 rounded"
+      >
         <option value="BTCUSDT">BTC/USDT</option>
         <option value="ETHUSDT">ETH/USDT</option>
-        <option value="XRPUSDT">XRP/USDT</option>
-        {/* Ajoutez d'autres options pour les différentes paires de cryptomonnaie au format PAIREUSDT */}
+        {/* Ajoutez d'autres options pour les différentes paires de cryptomonnaie */}
       </select>
-      <div className="price">{price} USDT</div>
-      <div className={`percent-change ${percentChange >= 0 ? 'positive' : 'negative'}`}>
+      <div className="text-lg">
+        {price} USDT
+      </div>
+      <div className={`text-lg ${percentChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>
         {percentChange}% (24h)
       </div>
     </div>
