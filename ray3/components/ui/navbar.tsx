@@ -1,8 +1,36 @@
 import React from 'react';
 import Link from 'next/link';
-import { Button } from "./button";
+import ConnectButton from '../ConnectWallet';
 
-export default function Navbar() {
+import { Dispatch, SetStateAction, useState, useEffect } from "react";
+import { TezosToolkit } from "@taquito/taquito";
+import { BeaconWallet } from "@taquito/beacon-wallet";
+
+type ButtonProps = {
+  Tezos: TezosToolkit;
+  setContract: Dispatch<SetStateAction<any>>;
+  setWallet: Dispatch<SetStateAction<any>>;
+  setUserAddress: Dispatch<SetStateAction<string>>;
+  setUserBalance: Dispatch<SetStateAction<number>>;
+  setStorage: Dispatch<SetStateAction<number>>;
+  contractAddress: string;
+  setBeaconConnection: Dispatch<SetStateAction<boolean>>;
+  setPublicToken: Dispatch<SetStateAction<string | null>>;
+  wallet: BeaconWallet;
+};
+
+export default function Navbar({
+    Tezos,
+    setContract,
+    setWallet,
+    setUserAddress,
+    setUserBalance,
+    setStorage,
+    contractAddress,
+    setBeaconConnection,
+    setPublicToken,
+    wallet,
+  }: ButtonProps) {
   return (
     <nav className="flex items-center justify-between p-2 bg-slate-900 text-purple-900">
       <div className="flex items-center space-x-2">
@@ -27,7 +55,18 @@ export default function Navbar() {
         </ul>
       </div>
       <div>
-        <Button variant="secondary" className="h-8 bg-gradient-to-r from-sky-500 to-indigo-500 text-white mr-5">Connect Your Wallet</Button>
+      <ConnectButton
+        Tezos={Tezos}
+        setContract={setContract}
+        setPublicToken={setPublicToken}
+        setWallet={setWallet}
+        setUserAddress={setUserAddress}
+        setUserBalance={setUserBalance}
+        setStorage={setStorage}
+        contractAddress={contractAddress}
+        setBeaconConnection={setBeaconConnection}
+        wallet={wallet}
+        />
       </div>
     </nav>
   );

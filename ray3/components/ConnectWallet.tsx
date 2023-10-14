@@ -6,6 +6,7 @@ import {
   BeaconEvent,
   defaultEventCallbacks,
 } from "@airgap/beacon-dapp";
+import { Button } from "../components/ui/button";
 
 type ButtonProps = {
   Tezos: TezosToolkit;
@@ -83,11 +84,11 @@ const ConnectButton = ({
 
   return (
     <div className="buttons">
-      <button className="button" onClick={connectWallet}>
+      <Button variant="secondary" className="h-8 bg-gradient-to-r from-sky-500 to-indigo-500 text-white mr-5" onClick={connectWallet}>
         <span>
           <i className="fas fa-wallet"></i>&nbsp; Connect wallet
         </span>
-      </button>
+      </Button>
     </div>
   );
 };
