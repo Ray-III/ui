@@ -1,31 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { get_balance_user_friendly } from '../../lib/contracts/fa2'
+import React, { useState } from 'react';
 
-const TradingForm = ({
-  Tezos,
-  setTezos,
-  setContract,
-  setWallet,
-  setUserAddress,
-  userAddress,
-  setUserBalance,
-  setStorage,
-  contractAddress,
-  setBeaconConnection,
-  setPublicToken,
-  wallet,
-}) => {
+const TradingForm = () => {
   const [position, setPosition] = useState<'long' | 'short'>('long'); // Par défaut, position long
   const [amount, setAmount] = useState(0);
   const [leverage, setLeverage] = useState(1);
-  const [tokenBalance, setTokenBalance] = useState(0);
 
   const handlePositionChange = (selectedPosition: 'long' | 'short') => {
     setPosition(selectedPosition);
-  };
-
-  const handleMaxAmount = () => {
-    setAmount(tokenBalance);
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,31 +17,17 @@ const TradingForm = ({
     setLeverage(parseFloat(e.target.value)); // Assurez-vous de convertir la valeur en nombre
   };
 
-  // Calculer la taille de la position
-  const positionSize = amount * leverage;
-
   const executeOrder = () => {
     // Logique pour exécuter l'ordre en fonction des valeurs de position, amount et leverage.
     console.log('Ordre exécuté :', position, amount, leverage);
+
+    // Réinitialiser les valeurs d'amount et leverage à zéro (ou à leurs valeurs par défaut).
+    setAmount(0);
+    setLeverage(1);
   };
 
-  useEffect(() => {
-    if(!Tezos || !userAddress) return;
-    (async () => {
-      const fa2_contract_address = "KT19QkeKzaHaAJGSRqH8ijF1pkgbvTNQkjfU"; // token id 0: uUSD testnet
-      const balance = await get_balance_user_friendly(Tezos, fa2_contract_address, userAddress);
-      console.log({balance})
-      setTokenBalance(balance.toString());
-    }
-    )();
-  },[Tezos, userAddress]);
-
-  useEffect(() => {
-    if(isNaN(amount) || amount === undefined) return;
-    if(amount > tokenBalance) return setAmount(tokenBalance);
-    if(amount < 0) return setAmount(0);
-
-  }, [tokenBalance, amount]);
+  // Calculer la taille de la position
+  const positionSize = amount * leverage;
 
   return (
     <div className="trading-form">
@@ -82,24 +49,15 @@ const TradingForm = ({
       </div>
       <div className="mb-10">
         <label>Amount (USDT):</label>
-        <div className="flex justify-between">
-          <input
-            type="number"
-            value={amount}
-            onChange={handleAmountChange}
-            className="w-full p-2"
-            style={{
-              color: 'black',
-            }}
-          />
-          <a 
-            onClick={handleMaxAmount} 
-            className="text-blue-500 cursor-pointer ml-2"
-            style={{ alignSelf: 'center' }}
-          >
-            Max
-          </a>
-        </div>
+        <input
+          type="number"
+          value={amount}
+          onChange={handleAmountChange}
+          className="w-full p-2"
+          style={{
+            color: 'black',
+          }}
+        />
       </div>
       <div className="mb-10 leverage-slider">
         <label>Leverage:</label>
