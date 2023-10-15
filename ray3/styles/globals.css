@@ -138,5 +138,55 @@
   }
 }
 
+/* OrderHistory container */
+.order-history {
+  background: #000;
+  color: #fff;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+/* OrderHistory tabs */
+.order-history-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-history-tab {
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.order-history-tab.active {
+  background: #fff; /* Couleur de fond de l'onglet actif */
+  color: #000; /* Couleur du texte de l'onglet actif */
+}
+
+/* OrderHistory content */
+.order-history-content {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.open-positions,
+.position-history {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Rest of your styles can go here */
+
+
 }
 

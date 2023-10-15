@@ -15,6 +15,7 @@ import DisconnectButton from "../components/DisconnectWallet";
 import qrcode from "qrcode-generator";
 import UpdateContract from "../components/UpdateContract";
 import Transfers from "../components/Transfers";
+import OrderHistory from '../components/ui/orderHistory';
 
 interface TradingBarProps {
   selectedPair: string;
@@ -81,11 +82,12 @@ const Home: React.FC = () => {
           percentChange={percentChange}
           onUpdateData={updateData}
         />
-      <div className="flex p-4 mb-6">
+      <div className="flex p-4 mb-6 mt-7">
         <Chart selectedPair={selectedPair} />
         <TradingForm />
       </div>
-      <Footer/>
+      <OrderHistory />
+      <Footer />
     </div>
   );
 };

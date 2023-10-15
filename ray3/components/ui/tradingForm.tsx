@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 const TradingForm = () => {
-  const [position, setPosition] = useState('long'); // Par défaut, position long
+  const [position, setPosition] = useState<'long' | 'short'>('long'); // Par défaut, position long
   const [amount, setAmount] = useState(0);
   const [leverage, setLeverage] = useState(1);
 
-  const handlePositionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPosition(e.target.value);
+  const handlePositionChange = (selectedPosition: 'long' | 'short') => {
+    setPosition(selectedPosition);
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +17,9 @@ const TradingForm = () => {
     setLeverage(parseFloat(e.target.value)); // Assurez-vous de convertir la valeur en nombre
   };
 
+  // Calculer la taille de la position
+  const positionSize = amount * leverage;
+
   const executeOrder = () => {
     // Logique pour exécuter l'ordre en fonction des valeurs de position, amount et leverage.
     console.log('Ordre exécuté :', position, amount, leverage);
@@ -25,34 +28,44 @@ const TradingForm = () => {
   return (
     <div className="trading-form">
       <div className="mb-10">
-        <label>Position:</label>
-        <select
-          value={position}
-          onChange={handlePositionChange}
-          className="w-full p-2"
-          style={{
-            color: position === 'long' ? 'green' : 'red', // Couleur différente pour Long et Short
-          }}
+        <button
+          onClick={() => handlePositionChange('long')}
+          className={`w-24 h-10 ${position === 'long' ? 'bg-green-500' : 'bg-gray-300'} ml-3 mr-6`}
+          style={{ color: 'white' }}
         >
-          <option value="long" style={{ color: 'green' }}>
-            Long
-          </option>
-          <option value="short" style={{ color: 'red' }}>
-            Short
-          </option>
-        </select>
+          Long
+        </button>
+        <button
+          onClick={() => handlePositionChange('short')}
+          className={`w-24 h-10 ${position === 'short' ? 'bg-red-500' : 'bg-gray-300'}`}
+          style={{ color: 'white' }}
+        >
+          Short
+        </button>
       </div>
       <div className="mb-10">
-        <label>Amount (USD):</label>
-        <input type="number" value={amount} onChange={handleAmountChange} className="w-full p-2" />
+        <label>Amount (USDT):</label>
+        <input
+          type="number"
+          value={amount}
+          onChange={handleAmountChange}
+          className="w-full p-2"
+          style={{
+            color: 'black',
+          }}
+        />
       </div>
       <div className="mb-10 leverage-slider">
         <label>Leverage:</label>
         <input type="range" min="1" max="100" step="1" value={leverage} onChange={handleLeverageChange} className="w-full" />
         <span>{leverage}x</span>
       </div>
-      <button onClick={executeOrder} className="w-full p-2 bg-blue-500 text-white font-bold rounded mt-3">
-        Execute Order
+      <div className="mb-6">
+        <label className="mr-3">Position Size:</label>
+        <span>{positionSize} USDT</span>
+      </div>
+      <button onClick={executeOrder} className="w-full p-2 h-14 bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-bold rounded mt-3">
+        Place Order
       </button>
     </div>
   );
