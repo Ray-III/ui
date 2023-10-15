@@ -17,13 +17,17 @@ const TradingForm = () => {
     setLeverage(parseFloat(e.target.value)); // Assurez-vous de convertir la valeur en nombre
   };
 
-  // Calculer la taille de la position
-  const positionSize = amount * leverage;
-
   const executeOrder = () => {
     // Logique pour exécuter l'ordre en fonction des valeurs de position, amount et leverage.
     console.log('Ordre exécuté :', position, amount, leverage);
+
+    // Réinitialiser les valeurs d'amount et leverage à zéro (ou à leurs valeurs par défaut).
+    setAmount(0);
+    setLeverage(1);
   };
+
+  // Calculer la taille de la position
+  const positionSize = amount * leverage;
 
   return (
     <div className="trading-form">
