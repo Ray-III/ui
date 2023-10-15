@@ -84,7 +84,20 @@ const Home: React.FC = () => {
         />
       <div className="flex p-4 mb-6 mt-7">
         <Chart selectedPair={selectedPair} />
-        <TradingForm />
+        <TradingForm
+          Tezos={Tezos}
+          setTezos={setTezos}
+          setContract={setContract}
+          setPublicToken={setPublicToken}
+          setWallet={setWallet}
+          setUserAddress={setUserAddress}
+          setUserBalance={setUserBalance}
+          setStorage={setStorage}
+          contractAddress={contractAddress}
+          setBeaconConnection={setBeaconConnection}
+          wallet={wallet}
+          userAddress={userAddress}
+        />
       </div>
       <OrderHistory />
       <Footer />
