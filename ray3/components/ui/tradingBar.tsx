@@ -11,9 +11,10 @@ interface TradingBarProps {
 
 const TradingBar: React.FC<TradingBarProps> = ({ selectedPair, price, percentChange, onUpdateData }) => {
   const [internalSelectedPair, setInternalSelectedPair] = useState(selectedPair);
+  const [volume, setVolume] = useState(0);
+  const [fundingRate, setFundingRate] = useState(0);
 
   useEffect(() => {
-    // Effectuez une requête API pour obtenir les données en fonction de selectedPair
     const fetchData = async () => {
       try {
         const apiUrl = `https://api.binance.com/api/v3/ticker/24hr?symbol=${internalSelectedPair}`;
@@ -21,6 +22,11 @@ const TradingBar: React.FC<TradingBarProps> = ({ selectedPair, price, percentCha
         const data = await response.json();
 
         onUpdateData(internalSelectedPair, parseFloat(data.lastPrice), parseFloat(data.priceChangePercent));
+
+        // Obtenir le volume et le funding rate
+        setVolume(parseFloat(data.volume));
+        // Assurez-vous de rechercher la clé appropriée pour le funding rate dans la réponse de l'API.
+        setFundingRate(parseFloat(data.fundingRate));
       } catch (error) {
         console.error('Erreur lors de la requête API :', error);
       }
@@ -34,7 +40,7 @@ const TradingBar: React.FC<TradingBarProps> = ({ selectedPair, price, percentCha
       <select
         value={internalSelectedPair}
         onChange={(e) => setInternalSelectedPair(e.target.value)}
-        className="bg-black text-white border border-white p-2 rounded"
+        className="bg-black text-white border border-white p-2 rounded w-50"
       >
         <option value="BTCUSDT">BTC/USDT</option>
         <option value="XTZUSDT">XTZ/USDT</option>
@@ -46,8 +52,15 @@ const TradingBar: React.FC<TradingBarProps> = ({ selectedPair, price, percentCha
       <div className={`text-lg ${percentChange >= 0 ? 'text-green-500' : 'text-red-500'}`}>
         {percentChange}% (24h)
       </div>
+      <div className="text-lg">
+        Volume: {volume}
+      </div>
+      <div className="text-lg">
+        Funding Rate: XXXX
+      </div>
     </div>
   );
 };
+
 
 export default TradingBar;
